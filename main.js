@@ -1,7 +1,10 @@
+
+/*
 import { error } from 'console'
 import fs from 'fs'
 
 const ruta = 'ejemplo.txt'
+*/
 
 /*
 //fs.writeFileSync('ejemplo.txt','Hello') //Genero un txt nuevo si no existe, sino lo reemplazo
@@ -17,6 +20,7 @@ if (fs.existsSync(ruta)) {
 } 
     */
 
+/*
 fs.writeFile(ruta, 'Hola', (error) => {
 
     if (error)
@@ -35,3 +39,17 @@ fs.writeFile(ruta, 'Hola', (error) => {
     })
 
 })
+*/
+
+import fs from 'fs/promises'
+const ruta = 'ejemplo.txt'
+
+await fs.writeFile('ejemplo.txt', 'Hello') //Genero un txt nuevo si no existe, sino lo reemplazo
+
+
+let datos = await fs.readFile(ruta, 'utf8')
+console.log(datos);
+
+await fs.appendFile(ruta, "Hello \n")
+
+await fs.unlink(ruta)
