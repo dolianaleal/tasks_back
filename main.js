@@ -41,6 +41,9 @@ fs.writeFile(ruta, 'Hola', (error) => {
 })
 */
 
+//----------- 2nd task
+
+/*
 import fs from 'fs/promises'
 const ruta = 'ejemplo.txt'
 
@@ -53,3 +56,46 @@ console.log(datos);
 await fs.appendFile(ruta, "Hello \n")
 
 await fs.unlink(ruta)
+
+*/
+
+import fs from 'fs/promises'
+import crypto from 'crypto'
+const ruta = 'productos.json'
+
+const leerProductos = async () => {
+    try {
+        const data = await fs.readFile(ruta, 'utf8') //Lo leo como un JSON
+        const productos = JSON.parse(data)
+        console.log(productos)
+        return productos
+
+    } catch (error) {
+        console.log("Error en lectura de productos", error)
+
+    }
+
+
+}
+
+const agregarProductos = async (nuevoProducto) => {
+
+    try {
+        const prods = await leerProductos()
+        prods.push(nuevoProducto) // Al transformalo de JSON a objeto, lo puedo tratar como un array de js
+        await fs.writeFile(ruta, JSON.stringify(prods)) // Para guardarlo lo vuelvo a transformar en JSON
+        console.log("Producto almacenado")     
+    } catch (error) {
+        console.log("Error al agregar producto:", error)
+    }
+}
+
+const newProduct = {
+    id: crypto.randomBytes(5).toString('hex'), //genero ID unico
+    nombre: "Arroz",
+    marca: "Test",
+    precio: 100,
+    stock: 10
+}
+
+agregarProductos(newProduct)
